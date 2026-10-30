@@ -1,0 +1,33 @@
+name: Build RP2040 UF2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pico:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install arduino-cli
+        uses: arduino/setup-arduino-cli@v2
+      - name: Install Earle Philhower Arduino-Pico core
+        run: |
+          arduino-cli core update-index --additional-urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+          arduino-cli core install rp2040:rp2040 --additional-urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
+      - name: Compile firmware
+        run: |
+          mkdir -p dist
+          arduino-cli compile --fqbn rp2040:rp2040:rpipico --output-dir dist firmware/pico_bluejay_passthrough
+          ls -lah dist/
+          test -n "$(find dist -maxdepth 1 -name '*.uf2' -print -quit)"
+      - name: Upload UF2
+        uses: actions/upload-artifact@v4
+        with:
+          name: pico-bluejay-configurator-rp2040
+          path: dist/*.uf2
+          if-no-files-found: error
