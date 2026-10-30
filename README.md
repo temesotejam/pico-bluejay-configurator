@@ -1,8 +1,23 @@
 # pico-bluejay-configurator
 
+## Pico用UF2 ダウンロード
+
+**[⬇ Raspberry Pi Pico (RP2040) 用UF2を直接ダウンロード](https://github.com/temesotejam/pico-bluejay-configurator/releases/download/pico-latest/pico-bluejay-configurator-pico.uf2)**
+
+[ダウンロード一覧（GitHub Releases）](https://github.com/temesotejam/pico-bluejay-configurator/releases/tag/pico-latest) · [最新のビルド結果（Actions）](https://github.com/temesotejam/pico-bluejay-configurator/actions/workflows/build-pico.yml)
+
+- **Pico専用**（RP2040）。Pico 2 / RP2350は非対応です。
+- Picoの **BOOTSEL** を押しながらUSB接続し、`RPI-RP2` にダウンロードしたUF2をコピーします。
+- モーター配線は既存FCと同一（FR=GPIO15、FL=GPIO14、RR=GPIO3、RL=GPIO2）。
+- **プロペラを外すこと。** 初期確認ではESCの設定を読み出すだけにしてください。実機ではESC 1/2の認識・設定画面表示を確認済みですが、設定の書き込み・復元および全ESCでの互換性は未検証です。
+
+UF2はmainブランチのビルド成功時にGitHub Releaseへ自動更新されます。上のリンクからZIPを展開せずにそのままUF2を取得できます。
+
+---
+
 Raspberry Pi **Pico (RP2040)** を Bluejay / BLHeli_S ESC 用の **USB - BLHeli 4-way passthrough** インターフェースとして使う実験用ファームウェアです。FC用のモータ信号線を、そのままESC設定通信用に使います。飛行制御・DShot出力は行いません。
 
-> **開発・未実機検証**: Pico + Bluejay ESCでの接続・読み出し・保存をまだ実機確認していません。現在の最優先は **ESC Configurator からの認識 → 設定の読み出し → 検証後に保存** です。ESCのファームウェア書換え（Flash）は、実機での読み出し・設定変更・再読出しが成功するまで行わないでください。
+> **実機検証中**: Pico + Bluejay 0.14搭載ESCで少なくともESC 1/2の認識と設定画面表示を確認しています。ただし設定データの妥当性や保存処理は未検証です。ESCのファームウェア書換え（Flash）は、実機での読み出し・設定変更・再読出しが成功するまで行わないでください。
 
 ## 対応・範囲
 
@@ -36,7 +51,7 @@ Arduino IDE を使う場合:
 3. ボードを **Raspberry Pi Pico**、USB Stack を **Pico SDK（既定）** に設定
 4. コンパイル・アップロード、または生成されたUF2を BOOTSEL 状態の `RPI-RP2` にコピー
 
-GitHub Actions `Build Pico UF2` でビルド・UF2をArtifactとして保存する構成も入れています。ワークフローが成功した成果物を利用してください。未成功のバイナリや未検証のファームウェアは配布しません。
+GitHub Actions `Build RP2040 UF2` でビルドし、成功時にUF2をArtifactsとGitHub Releases（固定のダウンロードリンク）へ公開します。実機での設定書き込み・更新の安全性は未確認です。
 
 ## 接続・設定手順
 
