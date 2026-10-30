@@ -23,7 +23,7 @@ uint8_t passthroughPins[8] = {255, 255, 255, 255, 255, 255, 255, 255};
 uint8_t escCount           = 0;
 uint32_t clockFreq         = 0;
 
-gpio_function externalPinFunctions[8] = {GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL};
+gpio_function_t externalPinFunctions[8] = {GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL, GPIO_FUNC_NULL};
 
 void beginPassthrough(uint8_t *pins, uint8_t pinCount, PIO pio, int8_t sm) {
 	if (passthroughSetup) {
